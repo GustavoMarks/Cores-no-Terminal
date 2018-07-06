@@ -1,123 +1,73 @@
 print("---BEM-VINDO AO TESTE DE CORES DO TERMINAL---")
 print("      (entre 'ajuda' para instruções)")
 
-entrada = ' '
+orig = 'Criado por Gustavo (GitHub: GustavoM7) ;)' #variável para 'memória externa' dentro do loop
 
-while entrada!='sair':
-	texto = entrada
+cores = {'cinza':'30', 'vermelho':'31', 'verde':'32', 'amarelo':'33', 'azul':'34', 'violeta':'35', 'ciano':'36', 'branco':'37'} #dicionário para valores das cores
+fundos = {'cinza':';40m', 'vermelho':';41m', 'verde':';42m', 'amarelo':';43m', 'azul':';44m', 'violeta':';45m', 'ciano':';46m', 'branco':';47m','nulo':'m'} #dicionário para valores das cores de fundo
+estilos = {'nulo':'\033[0;','negrito':'\033[1;','sublinhado':'\033[4;', 'negativo':'\033[7;'} #dicionário para valores dos estilos
+nulo = "\033[m" #variável para limpar configurações do terminal
+
+while True: #cria loop que será quebrado com entrada 'sair'.
+	texto = orig  #guarda a última entrada do loop na memória.
 	entrada = input("entrada:")
-	contador = 0
-	estilo = '0'
-	fundo = ''
+	orig = entrada #salva entrada com formatação original
+	entrada = entrada.lower() #formata string para reconhecer variações de maiúsculo e minúsculo
 
-	while contador < len(entrada) - 1:
-		if entrada[contador] == '*':
-			entrada, estilo = entrada.split('*')
-		contador = contador + 1
-	
-	contador = 0
-	while contador < len(estilo) - 1:
-		if estilo[contador] == '#':
-			estilo, fundo = estilo.split('#')
-		contador = contador + 1
+	if entrada == 'sair': #verifica se entrada pede saída e encerra o programa
+		break
 
-	if fundo == 'cinza':
-		fundo = ';40'
+	if entrada == 'ajuda': #caso de entrada para instruções
+		print("Instruções:")
+		print("-Entre 'sair' para encerrar.")
+		print("-Entre 'cores' para lista de cores.")
+		print("-Entre uma cor da lista apos entrada de texto para colorir.")
+		print("-Entre estilos para lista de estilos.")
+		print("-Adicione estilo com cor da lista seguida de '*' e estilo da lista.")
+		print("-Adcione cor de fundo com '#' seguido de cor da lsita ao final da entrada de cor.")
 
-	elif fundo == 'vermelho':
-		fundo = ';41'
+	elif entrada == 'cores': #caso de entrada para lista de cores
+		print("Lista de cores:"+nulo)
+		print("-\033[0;30mcinza"+nulo)
+		print("-\033[0;31mvermelho"+nulo)
+		print("-\033[0;32mverde"+nulo)
+		print("-\033[0;33mamarelo"+nulo)
+		print("-\033[0;34mazul"+nulo)
+		print("-\033[0;35mvioleta"+nulo)
+		print("-\033[0;36mciano"+nulo)
+		print("-\033[0;37mbranco"+nulo)
 
-	elif fundo == 'verde':
-		fundo = ';42'
-
-	elif fundo == 'amarelo':
-		fundo = ';43'
-
-	elif fundo == 'azul':
-		fundo = ';44'
-
-	elif fundo == 'violeta':
-		fundo = ';45'
-
-	elif fundo == 'ciano':
-		fundo = ';46'
-
-	elif fundo == 'branco':
-		fundo = ';47'
+	elif entrada == 'estilos': #caso de entrada para lista de estilos
+		print("-\033[1mnegrito"+nulo)
+		print("-\033[4msublinhado"+nulo)
+		print("-\033[7mnegativo"+nulo)
+		print("-nulo")
 
 	else:
-		fundo = ''
+		cor = entrada #salva valor da entrada para manipulação
+		estilo = 'nulo' #valor padrão para estilo
+		if '*' in cor: #verifica se há e salva comando para adicionar estilo (*)
+			try: #testa se é possível separa em somente daus variáveis
+				cor, estilo = cor.split('*')
+			except:
+				estilo = 'erro'
 
-	if estilo == 'negrito':
-		estilo = '1'
-	elif estilo == 'sublinhado':
-		estilo = '4'
-	elif estilo == 'negativo':
-		estilo = '7'
-	else:
-		estilo = '0'
+		fundo = 'nulo' #valor padrão para fundo
+		if '#' in estilo: #verifica se há e salva comando para adicionar fundo (#)
+			try:#testa se é possível separar em somente duas variáveis
+				estilo, fundo = estilo.split('#')
 
-	cinza = "\033["+estilo+";30"+fundo+"m"
-	vermelho = "\033["+estilo+";31"+fundo+"m"
-	verde = "\033["+estilo+";32"+fundo+"m"
-	amarelo = "\033["+estilo+";33"+fundo+"m"
-	azul = "\033["+estilo+";34"+fundo+"m"
-	violeta = "\033["+estilo+";35"+fundo+"m"
-	ciano = "\033["+estilo+";36"+fundo+"m"
-	branco = "\033["+estilo+";37"+fundo+"m"
-	nulo = "\033[m"
+			except:
+				fundo = 'erro'
+		if '#' in cor: #verifica se há e salva comando para adicionar fundo (#)
+			try:#testa se é possível separar em somente duas variáveis
+				cor, fundo = cor.split('#')
+			except:
+				fundo = 'erro'
 
-	if entrada!='sair':
-		if entrada=='ajuda':
-			print("Instruções:")
-			print("-Entre 'sair' para encerrar.")
-			print("-Entre 'cores' para lista de cores.")
-			print("-Entre uma cor da lista apos entrada de texto para colorir.")
-			print("-Entre estilos para lista de estilos.")
-			print("-Adicione estilo com cor da lista seguida de '*' e estilo da lista.")
-			print("-Adcione cor de fundo com '#' seguido de cor da lsita ao final da entrada de cor.")
-
-		if entrada=='cores':
-			print("Lista de cores:"+nulo)
-			print("-"+cinza+"cinza"+nulo)
-			print("-"+vermelho+"vermelho"+nulo)
-			print("-"+verde+"verde"+nulo)
-			print("-"+amarelo+"amarelo"+nulo)
-			print("-"+azul+"azul"+nulo)
-			print("-"+violeta+"violeta"+nulo)
-			print("-"+ciano+"ciano"+nulo)
-			print("-"+branco+"branco"+nulo)
-
-		if entrada == 'estilos':
-			print("-\033[1mnegrito"+nulo)
-			print("-\033[4msublinhado"+nulo)
-			print("-\033[7mnegativo"+nulo)
-			print("-nulo")
-
-		if entrada == 'cinza':
-			print(cinza+texto+nulo)
-
-		if entrada == 'vermelho':
-			print(vermelho+texto+nulo)
-
-		if entrada == 'verde':
-			print(verde+texto+nulo)
-
-		if entrada == 'amarelo':
-			print(amarelo+texto+nulo)
-
-		if entrada == 'azul':
-			print(azul+texto+nulo)
-
-		if entrada == 'violeta':
-			print(violeta+texto+nulo)
-
-		if entrada == 'ciano':
-			print(ciano+texto+nulo)
-
-		if entrada == 'branco':
-			print(branco+texto+nulo)
-
-		if entrada == 'arco iris':
-			print(cinza+"a"+vermelho+"r"+amarelo+"c"+verde+"o "+ciano+"i"+azul+"r"+violeta+"i"+branco+"s"+nulo)
+		if (estilo in estilos) and (cor in cores) and (fundo in fundos): #verifica validade das entradas e mostra teste com comando
+			print(estilos[estilo]+cores[cor]+fundos[fundo]+texto+nulo)
+		
+		else: #assume entrada de texto
+			print("-Entrada de texto registrada.")
 
